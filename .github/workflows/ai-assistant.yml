@@ -7,10 +7,15 @@ jobs:
   remind:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        run: |
+          echo "Проверка данных:"
+          echo "Issue URL: ${{ github.event.issue.url }}"
+
       - name: Notify about manual AI
-  run: |
-    curl -s -X POST \
-      -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-      -H "Accept: application/vnd.github.v3+json" \
-      -d '{"body": "Владелец репозитория: запросите анализ у @allservis в DeepSeek Chat."}' \
-      "${{ github.event.issue.comments_url }}"
+        run: |
+          curl -v -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"body": "Тест: workflow сработал для Issue #${{ github.event.issue.number }}"}' \
+            "${{ github.event.issue.comments_url }}"
