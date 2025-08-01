@@ -1,16 +1,14 @@
-name: AI Collaborator  
-on:  
-  issues:  
-    types: [opened, edited]  
-  pull_request:  
-    types: [opened, synchronize]  
+name: Manual AI Assistant
+on:
+  issues:
+    types: [labeled]
 
-jobs:  
-  ai_comment:  
-    runs-on: ubuntu-latest  
-    steps:  
-      - name: Analyze issue/PR  
-        run: |  
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify about manual AI
+        run: |
           curl -s -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
