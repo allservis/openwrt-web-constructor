@@ -1,0 +1,18 @@
+name: AI Collaborator  
+on:  
+  issues:  
+    types: [opened, edited]  
+  pull_request:  
+    types: [opened, synchronize]  
+
+jobs:  
+  ai_comment:  
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Analyze issue/PR  
+        run: |  
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"body": "Владелец репозитория: пожалуйста, запросите анализ у @allservis в DeepSeek Chat и добавьте ответ вручную"}' \
+            "${{ github.event.issue.comments_url }}"
